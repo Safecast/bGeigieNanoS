@@ -5,8 +5,8 @@
 // bGeigie Nano definitions
 //
 
-#define NANO_DEVICE_ID        0000
-#define NANO_VERSION       "2.0.1"
+#define NANO_DEVICE_ID        2007
+#define NANO_VERSION       "4.0.9"
 #define NANO_HEADER        "BNRDD"
 #define NANO_CPM_FACTOR        334
 #define NANO_BQM2_FACTOR        37
@@ -47,50 +47,21 @@
 #if ENABLE_NANOPCBKIT_PIN
   #warning NANO PCB KIT with OLED screen used !
   #define OLED_SPI_MODE // SPI mode enabled
-  #define OLED_CLK 10
-  #define OLED_DATA 9
-  #define OLED_DC 11
-  #define OLED_CS 12
-  #define OLED_RESET 13
-  #define GPS_RX_PIN 1
-  #define GPS_TX_PIN 0
+  #define OLED_CLK 13
+  #define OLED_DATA 11
+  #define OLED_DC 5
+  #define OLED_CS 4
+  #define OLED_RESET 3
+  #define GPS_RX_PIN 0
+  #define GPS_TX_PIN 1
   #define OPENLOG_RX_PIN 7
   #define OPENLOG_TX_PIN 8
   #define OPENLOG_RST_PIN 6
   #define LOGALARM_LED_PIN A4
-  #define CUSTOM_FN_PIN 3
-#else
-  #warning NANO KIT with OLED screen used !
-  #define OLED_SPI_MODE // SPI mode enabled
-  #define OLED_CLK 7
-  #define OLED_DATA 6
-  #define OLED_DC 5
-  #define OLED_CS 4
-  #define OLED_RESET 3
-  #define OPENLOG_RX_PIN 6
-  #define OPENLOG_TX_PIN 8
-  #define OPENLOG_RST_PIN 4
+  //#define CUSTOM_FN_PIN 10
 #endif  // ENABLE_NANOPCBKIT_PIN
 #else
-#if ENABLE_HARDWARE_COUNTER
-  // Pin assignment for version 1.0.1
-  #warning Hardware counter is used !
-  #define OLED_RESET 4
-  #define GPS_RX_PIN 6
-  #define GPS_TX_PIN 7
-  #define OPENLOG_RX_PIN 8
-  #define OPENLOG_TX_PIN 9
-  #define OPENLOG_RST_PIN 10
-#else
-  // Old Pin assignment for version 1.0.0
-  #warning Interrupt counter is used !
-  #define OLED_RESET 4
-  #define GPS_RX_PIN 5
-  #define GPS_TX_PIN 6
-  #define OPENLOG_RX_PIN 7
-  #define OPENLOG_TX_PIN 8
-  #define OPENLOG_RST_PIN 9
-#endif
+
 #endif
 
 
@@ -100,7 +71,7 @@
 
 // InterruptCounter pin
 // true pin numbers on Teensy
-#define INTERRUPT_COUNTER_PIN 2
+#define INTERRUPT_COUNTER_PIN 20
 
 // bGeigie <-> xGeigie switch pin
 #define GEIGIE_TYPE_PIN A5
@@ -110,7 +81,7 @@
 // GND -- R2 --A0 -- R1 -- VCC
 // https://en.wikipedia.org/wiki/Voltage_divider
 #define VOLTAGE_PIN A0
-#define VOLTAGE_R1 9100
+#define VOLTAGE_R1 10000
 #define VOLTAGE_R2 1000
 
 #endif
