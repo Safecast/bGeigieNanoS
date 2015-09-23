@@ -58,7 +58,7 @@ Adafruit_SSD1306 display(OLED_RESET);
 #endif
 
 #if (SSD1306_LCDHEIGHT != 64)
-#error("Height incorrect, please change Adafruit_SSD1306.h!");
+//#error("Height incorrect, please change Adafruit_SSD1306.h!");
 #endif
 
 #if (_SS_MAX_RX_BUFF < 128)
@@ -277,6 +277,9 @@ NanoSetup nanoSetup(OpenLog, config, dose, line, LINE_SZ);
 // ****************************************************************************
 void setup()
 {
+  //serial for Xbee
+  Serial2.begin(9600);
+
 #ifdef GPS_LED_PIN
   pinMode(GPS_LED_PIN, OUTPUT);
 #endif
@@ -348,7 +351,7 @@ void setup()
 
   display.setTextColor(WHITE);
   display.setTextSize(1);
-  sprintf_P(strbuffer, PSTR("Geigie Nano %s"), NANO_VERSION);
+  sprintf_P(strbuffer, PSTR("Geigie Special %s"), NANO_VERSION);
   display.setCursor((128-((strlen(strbuffer)+1)*6))/2, 0);
   if (config.type == GEIGIE_TYPE_B) {
     display.print("b");
@@ -358,7 +361,7 @@ void setup()
   display.print(strbuffer);
   
   display.setCursor(8, 8);
-  int battery =((read_voltage(VOLTAGE_PIN)-30)*12.5);
+  int battery =((read_voltage(VOLTAGE_PIN)-30)*15);
   battery=(battery+20);
     if (battery < 0) battery=1;
     if (battery > 100) battery=100;
@@ -379,13 +382,14 @@ void setup()
   display.print(strbuffer);
 
   display.setTextSize(1);
-  display.setCursor(85, 8);
+  display.setCursor(8, 24);
   sprintf_P(strbuffer, PSTR("#%04d"), config.device_id);
   display.print(strbuffer);
+ 
 
   display.setTextSize(1);
   if (strlen(config.user_name)) {
-    display.setCursor((128-(strlen(config.user_name)*6))/2, 24); // textsize*8
+    display.setCursor((128-(strlen(config.user_name)*6))/2, 32); // textsize*8
     display.print(config.user_name);
   }
   
@@ -395,9 +399,7 @@ void setup()
 #endif
 
   //Serial.println(availableMemory());
-
 }
-
 
 
 // ****************************************************************************
@@ -572,6 +574,8 @@ void loop()
 
       // Printout line
       Serial.println(line);
+      Serial2.println(line);
+      
 
 #if ENABLE_OPENLOG
       if ((logfile_ready) && (GEIGIE_TYPE_B == config.type)) {
@@ -1165,7 +1169,7 @@ bool gps_gen_timestamp(TinyGPS &gps, char *buf, unsigned long counts, unsigned l
 
   // Display battery indicator
   // Range = [3.5v to 4.3v]
-  int battery =((read_voltage(VOLTAGE_PIN)-30));
+  int battery =((read_voltage(VOLTAGE_PIN)-27));
   if (battery < 0) battery = 0;	
   if (battery > 8) battery = 8;
   
